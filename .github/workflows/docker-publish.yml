@@ -28,7 +28,7 @@ jobs:
       matrix:
         include:
           - version: '11'
-            packages: 'jdk11'
+            packages: 'nixpkgs.jdk11'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
