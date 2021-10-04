@@ -7,6 +7,5 @@ RUN mkdir -p /output/store && \
 FROM scratch
 COPY --from=NIXBASE /output/store /nix/store
 COPY --from=NIXBASE /output/profile/ /usr/local/
-USER nobody
 ENTRYPOINT ["/tini", "--"]
 CMD ["java", "-version"]
