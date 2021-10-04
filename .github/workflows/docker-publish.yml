@@ -28,7 +28,7 @@ jobs:
       matrix:
         include:
           - version: '11'
-            packages: 'nixpkgs.jdk11'
+            packages: 'nixpkgs.adoptopenjdk-jre-bin'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
