@@ -30,6 +30,12 @@ jobs:
           - runtime: 'java'
             version: '11'
             packages: 'nixpkgs.adoptopenjdk-jre-bin'
+
+          - runtime: 'node'
+            version: '14'
+            packages: 'nixpkgs.nodejs-14_x'
+
+            
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
