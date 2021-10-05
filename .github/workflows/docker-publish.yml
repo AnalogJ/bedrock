@@ -75,6 +75,7 @@ jobs:
       - uses: azure/container-scan@v0
         with:
           image-name: ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}${{ matrix.runtime }}:${{ matrix.version }}
+          severity-threshold: 'UNKNOWN'
 
 #      - name: Upload Trivy scan results to GitHub Security tab
 #        uses: github/codeql-action/upload-sarif@v1
