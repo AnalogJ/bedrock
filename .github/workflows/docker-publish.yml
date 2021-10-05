@@ -71,3 +71,18 @@ jobs:
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}${{ matrix.runtime }}:${{ matrix.version }}
           build-args: |
             packages=${{ matrix.packages }}
+
+      - name: Run Trivy vulnerability scanner in repo mode
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}${{ matrix.runtime }}:${{ matrix.version }}
+          ignore-unfixed: true
+          format: 'template'
+          template: '@/contrib/sarif.tpl'
+          output: 'trivy-results.sarif'
+          severity: 'CRITICAL,HIGH'
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: 'trivy-results.sarif'
