@@ -35,7 +35,17 @@ jobs:
             version: '14'
             packages: 'nixpkgs.nodejs-14_x'
 
-            
+          - runtime: 'python'
+            version: '2'
+            packages: 'nixpkgs.python2Full'
+          - runtime: 'python'
+            version: '3'
+            packages: 'nixpkgs.python3Full'
+
+          - runtime: 'ruby'
+            version: '3'
+            packages: 'nixpkgs.ruby_3_0'
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
