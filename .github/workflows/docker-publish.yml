@@ -19,7 +19,7 @@ env:
   IMAGE_PREFIX: 'analogj/bedrock-'
 
 jobs:
-  java:
+  builder:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -27,7 +27,8 @@ jobs:
     strategy:
       matrix:
         include:
-          - version: '11'
+          - runtime: 'java'
+            version: '11'
             packages: 'nixpkgs.adoptopenjdk-jre-bin'
     steps:
       - name: Checkout repository
@@ -49,8 +50,8 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ${{ github.job }}/Dockerfile
+          file: ${{ matrix.runtime }}/Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}${{ github.job }}:${{ matrix.version }}
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}${{ matrix.runtime }}:${{ matrix.version }}
           build-args: |
             packages=${{ matrix.packages }}
