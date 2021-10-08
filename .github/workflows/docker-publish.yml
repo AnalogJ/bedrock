@@ -89,6 +89,13 @@ jobs:
           build-args: |
             packages=${{ matrix.packages }}
 
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@main
+        with:
+          cosign-release: 'v1.0.0' # optional
+      - name: Sign image
+          run: |
+            cosign sign -key my_cosign.key ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}${{ matrix.runtime }}:${{ matrix.tag }}
 #      - name: Run Trivy vulnerability scanner
 #        uses: aquasecurity/trivy-action@master
 #        with:
