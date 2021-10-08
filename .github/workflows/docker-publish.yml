@@ -28,24 +28,41 @@ jobs:
       matrix:
         include:
           - runtime: 'java'
-            version: '11'
+            tag: '11'
             packages: 'nixpkgs.adoptopenjdk-jre-bin'
+          - runtime: 'java'
+            tag: '11-shell'
+            packages: 'nixpkgs.adoptopenjdk-jre-bin nixpkgs.busybox'
+          - runtime: 'java'
+            tag: '11-shell-s6'
+            packages: 'nixpkgs.adoptopenjdk-jre-bin nixpkgs.busybox nixpkgs.s6'
 
           - runtime: 'node'
-            version: '14'
+            tag: '14'
             packages: 'nixpkgs.nodejs-14_x'
+          - runtime: 'node'
+            tag: '14-shell'
+            packages: 'nixpkgs.nodejs-14_x nixpkgs.busybox'
 
           - runtime: 'python'
-            version: '2'
+            tag: '2'
             packages: 'nixpkgs.python2Full'
           - runtime: 'python'
-            version: '3'
+            tag: '2-shell'
+            packages: 'nixpkgs.python2Full nixpkgs.busybox'
+          - runtime: 'python'
+            tag: '3'
             packages: 'nixpkgs.python3Full'
+          - runtime: 'python'
+            tag: '3-shell'
+            packages: 'nixpkgs.python3Full nixpkgs.busybox'
 
           - runtime: 'ruby'
-            version: '3'
+            tag: '3'
             packages: 'nixpkgs.ruby_3_0'
-
+          - runtime: 'ruby'
+            tag: '3-shell'
+            packages: 'nixpkgs.ruby_3_0 nixpkgs.busybox'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -68,14 +85,14 @@ jobs:
           context: .
           file: ${{ matrix.runtime }}/Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}${{ matrix.runtime }}:${{ matrix.version }}
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}${{ matrix.runtime }}:${{ matrix.tag }}
           build-args: |
             packages=${{ matrix.packages }}
 
 #      - name: Run Trivy vulnerability scanner
 #        uses: aquasecurity/trivy-action@master
 #        with:
-#          image-ref: '${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}${{ matrix.runtime }}:${{ matrix.version }}'
+#          image-ref: '${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}${{ matrix.runtime }}:${{ matrix.tag }}'
 #          format: 'table'
 #          exit-code: '1'
 #          ignore-unfixed: true
