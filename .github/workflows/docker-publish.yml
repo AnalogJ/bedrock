@@ -37,6 +37,17 @@ jobs:
             tag: '11-shell-s6'
             packages: 'nixpkgs.adoptopenjdk-jre-bin nixpkgs.busybox nixpkgs.s6'
 
+          - runtime: 'microsoft-jdk'
+            tag: '11'
+            packages: ''
+          - runtime: 'microsoft-jdk'
+            tag: '11-shell'
+            packages: 'nixpkgs.busybox'
+          - runtime: 'microsoft-jdk'
+            tag: '11-shell-s6'
+            packages: 'nixpkgs.busybox nixpkgs.s6'
+
+
           - runtime: 'node'
             tag: '14'
             packages: 'nixpkgs.nodejs-14_x'
@@ -82,8 +93,8 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
-          context: .
-          file: ${{ matrix.runtime }}/Dockerfile
+          context: ${{ matrix.runtime }}/
+          file: Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}${{ matrix.runtime }}:${{ matrix.tag }}
           build-args: |
