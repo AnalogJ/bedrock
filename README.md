@@ -8,6 +8,7 @@ images, but with added flexibility as images are built with Nix package manager.
 | Docker Image | Size |
 | --- | --- |
 | ghcr.io/analogj/bedrock-java:11 | 448MB |
+| ghcr.io/analogj/bedrock-microsoft-jdk:11 | 641MB |
 | ghcr.io/analogj/bedrock-node:14 | 261MB |
 | ghcr.io/analogj/bedrock-ruby:3 | 65.8MB |
 | ghcr.io/analogj/bedrock-python:2 | 112MB |
