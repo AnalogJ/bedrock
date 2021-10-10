@@ -103,6 +103,7 @@ jobs:
       - name: Push image
         if: github.event_name != 'pull_request'
         run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ${{ env.REGISTRY }} -u "analogj" --password-stdin
           docker push sign ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}${{ matrix.runtime }}:${{ matrix.tag }}
       - name: Install Cosign
         uses: sigstore/cosign-installer@main
