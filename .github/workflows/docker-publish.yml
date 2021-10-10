@@ -105,9 +105,11 @@ jobs:
         with:
           cosign-release: 'v1.0.0' # optional
       - name: Sign image
+        env:
+          COSIGN_PASSWORD: "${{ secrets.COSIGN_PASSPHRASE }}"
         run: |
           echo "${{ secrets.COSIGN_PRIVATE_KEY }}" > cosign.key
-          echo "${{ secrets.COSIGN_PASSPHRASE }}" | cosign sign -key cosign.key ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}${{ matrix.runtime }}:${{ matrix.tag }}
+          cosign sign -key cosign.key ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}${{ matrix.runtime }}:${{ matrix.tag }}
 #      - name: Run Trivy vulnerability scanner
 #        uses: aquasecurity/trivy-action@master
 #        with:
